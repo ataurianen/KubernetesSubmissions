@@ -1,4 +1,4 @@
-FROM node:22.16-alpine AS builder
+FROM node:24-alpine
 
 WORKDIR /app
 
@@ -8,12 +8,6 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build
+EXPOSE 3000
 
-FROM nginx:stable-alpine
-
-COPY --from=builder /app/dist /usr/share/nginx/html
-
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["node", "index.js"]
